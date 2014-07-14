@@ -17,6 +17,7 @@ use eZ\Publish\SPI\Persistence\Content\ObjectState\Handler as ObjectStateHandler
 use eZ\Publish\SPI\Persistence\Content\Search\Handler as SearchHandlerInterface;
 use eZ\Publish\SPI\Persistence\Content\Section\Handler as SectionHandler;
 use eZ\Publish\SPI\Persistence\Content\Search\Field;
+use eZ\Publish\SPI\Persistence\Content\Search\Document;
 use eZ\Publish\SPI\Persistence\Content\Search\FieldType;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -271,7 +272,7 @@ class Handler implements SearchHandlerInterface
         }
         $section = $this->sectionHandler->load( $content->versionInfo->contentInfo->sectionId );
 
-        $document = array(
+        $fields = array(
             new Field(
                 'id',
                 'content' . $content->versionInfo->contentInfo->id,
@@ -352,37 +353,36 @@ class Handler implements SearchHandlerInterface
                 $content->versionInfo->contentInfo->alwaysAvailable,
                 new FieldType\BooleanField()
             ),
-            $locationDocuments
         );
 
         if ( $mainLocation !== null )
         {
-            $document[] = new Field(
+            $fields[] = new Field(
                 'main_location',
                 $mainLocation->id,
                 new FieldType\IdentifierField()
             );
-            $document[] = new Field(
+            $fields[] = new Field(
                 'main_location_parent',
                 $mainLocation->parentId,
                 new FieldType\IdentifierField()
             );
-            $document[] = new Field(
+            $fields[] = new Field(
                 'main_location_remote_id',
                 $mainLocation->remoteId,
                 new FieldType\IdentifierField()
             );
-            $document[] = new Field(
+            $fields[] = new Field(
                 'main_path',
                 $mainLocation->pathString,
                 new FieldType\IdentifierField()
             );
-            $document[] = new Field(
+            $fields[] = new Field(
                 'main_depth',
                 $mainLocation->depth,
                 new FieldType\IntegerField()
             );
-            $document[] = new Field(
+            $fields[] = new Field(
                 'main_priority',
                 $mainLocation->priority,
                 new FieldType\IntegerField()
@@ -390,7 +390,7 @@ class Handler implements SearchHandlerInterface
         }
 
         $contentType = $this->contentTypeHandler->load( $content->versionInfo->contentInfo->contentTypeId );
-        $document[] = new Field(
+        $fields[] = new Field(
             'group',
             $contentType->groupIds,
             new FieldType\MultipleIdentifierField()
@@ -408,7 +408,7 @@ class Handler implements SearchHandlerInterface
                 $fieldType = $this->fieldRegistry->getType( $field->type );
                 foreach ( $fieldType->getIndexData( $field ) as $indexField )
                 {
-                    $document[] = new Field(
+                    $fields[] = new Field(
                         $this->fieldNameGenerator->getName(
                             $indexField->name,
                             $fieldDefinition->identifier,
@@ -430,10 +430,17 @@ class Handler implements SearchHandlerInterface
             )->id;
         }
 
-        $document[] = new Field(
+        $fields[] = new Field(
             'object_state',
             $objectStateIds,
             new FieldType\MultipleIdentifierField()
+        );
+
+        $document = new Document(
+            array(
+                "fields" => $fields,
+                "documents" => $locationDocuments,
+            )
         );
 
         return $document;
@@ -451,7 +458,7 @@ class Handler implements SearchHandlerInterface
      */
     protected function mapLocation( Location $location, $mainLocationId )
     {
-        $document = array(
+        $fields = array(
             new Field(
                 'id',
                 'location' . $location->id,
@@ -519,7 +526,11 @@ class Handler implements SearchHandlerInterface
             ),
         );
 
-        return $document;
+        return new Document(
+            array(
+                "fields" => $fields
+            )
+        );
     }
 
     /**
