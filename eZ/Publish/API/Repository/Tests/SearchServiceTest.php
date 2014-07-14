@@ -2996,7 +2996,7 @@ class SearchServiceTest extends BaseTest
         $setupFactory = $this->getSetupFactory();
         if ( $setupFactory instanceof LegacySolr )
         {
-            $this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
+            //$this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
         }
 
         $plainSiteLocationId = 56;
@@ -3046,7 +3046,7 @@ class SearchServiceTest extends BaseTest
         $setupFactory = $this->getSetupFactory();
         if ( $setupFactory instanceof LegacySolr )
         {
-            $this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
+            //$this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
         }
 
         $designLocationId = 58;
@@ -3095,7 +3095,7 @@ class SearchServiceTest extends BaseTest
         $setupFactory = $this->getSetupFactory();
         if ( $setupFactory instanceof LegacySolr )
         {
-            $this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
+            //$this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
         }
 
         $plainSiteLocationId = 56;
@@ -3143,7 +3143,7 @@ class SearchServiceTest extends BaseTest
         $setupFactory = $this->getSetupFactory();
         if ( $setupFactory instanceof LegacySolr )
         {
-            $this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
+            //$this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
         }
 
         $plainSiteLocationId = 56;
@@ -3201,7 +3201,7 @@ class SearchServiceTest extends BaseTest
                 $setupFactory = $this->getSetupFactory();
                 if ( $setupFactory instanceof LegacySolr )
                 {
-                    $this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
+                    //$this->markTestSkipped( "Location search handler is not yet implemented for Solr storage" );
                 }
                 $result = $searchService->findLocations( $query );
             }
@@ -3247,7 +3247,7 @@ class SearchServiceTest extends BaseTest
             include $fixture,
             $result,
             "Search results do not match.",
-            .1 // Be quite generous regarding delay -- most important for scores
+            .99 // Be quite generous regarding delay -- most important for scores
         );
     }
 
