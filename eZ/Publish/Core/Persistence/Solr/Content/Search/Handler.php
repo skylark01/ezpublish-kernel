@@ -343,86 +343,9 @@ class Handler implements SearchHandlerInterface
                 new FieldType\DateField()
             ),
             new Field(
-                'path',
-                array_map(
-                    function ( $location )
-                    {
-                        return $location->pathString;
-                    },
-                    $locations
-                ),
-                new FieldType\MultipleIdentifierField()
-            ),
-            new Field(
-                'location',
-                array_map(
-                    function ( $location )
-                    {
-                        return $location->id;
-                    },
-                    $locations
-                ),
-                new FieldType\MultipleIdentifierField()
-            ),
-            new Field(
-                'depth',
-                array_map(
-                    function ( $location )
-                    {
-                        return $location->depth;
-                    },
-                    $locations
-                ),
-                new FieldType\IntegerField()
-            ),
-            new Field(
-                'priority',
-                array_map(
-                    function ( $location )
-                    {
-                        return $location->priority;
-                    },
-                    $locations
-                ),
-                new FieldType\IntegerField()
-            ),
-            new Field(
-                'location_parent',
-                array_map(
-                    function ( $location )
-                    {
-                        return $location->parentId;
-                    },
-                    $locations
-                ),
-                new FieldType\MultipleIdentifierField()
-            ),
-            new Field(
-                'location_remote_id',
-                array_map(
-                    function ( $location )
-                    {
-                        return $location->remoteId;
-                    },
-                    $locations
-                ),
-                new FieldType\MultipleIdentifierField()
-            ),
-            new Field(
                 'language_code',
                 array_keys( $content->versionInfo->names ),
                 new FieldType\MultipleStringField()
-            ),
-            new Field(
-                'invisible',
-                array_map(
-                    function ( $location )
-                    {
-                        return $location->invisible;
-                    },
-                    $locations
-                ),
-                new FieldType\MultipleBooleanField()
             ),
             new Field(
                 'always_available',
