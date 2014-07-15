@@ -75,16 +75,17 @@ abstract class Slot extends BaseSlot
      * Enqueue the deletion of location
      *
      * @param mixed $locationId
+     * @param mixed $contentId
      */
-    protected function enqueueDeletionLocation( $locationId )
+    protected function enqueueDeletionLocation( $locationId, $contentId )
     {
         $searchHandler = $this->persistenceHandler->searchHandler();
 
         $this->repository->commitEvent(
-            function ( $lastEvent ) use ( $searchHandler, $locationId )
+            function ( $lastEvent ) use ( $searchHandler, $locationId, $contentId )
             {
                 $searchHandler->setCommit( $lastEvent );
-                $searchHandler->deleteLocation( $locationId );
+                $searchHandler->deleteLocation( $locationId, $contentId );
             }
         );
     }

@@ -199,8 +199,9 @@ class Handler implements SearchHandlerInterface
      * Deletes a location from the index
      *
      * @param mixed $locationId
+     * @param mixed $contentId
      */
-    public function deleteLocation( $locationId )
+    public function deleteLocation( $locationId, $contentId )
     {
         throw new \Exception( "Not implemented yet." );
     }
