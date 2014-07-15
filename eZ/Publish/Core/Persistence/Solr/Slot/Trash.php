@@ -27,6 +27,6 @@ class Trash extends Slot
         if ( !$signal instanceof Signal\TrashService\TrashSignal )
             return;
 
-        $this->enqueueDeletionLocation( $signal->locationId );
+        $this->enqueueDeletionLocation( $signal->locationId, $signal->contentId );
     }
 }
